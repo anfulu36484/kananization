@@ -1,25 +1,13 @@
-﻿
-/*
-# @file   kana_convert.js
-# @Author Lavrentiy Ivanov (ookami@mail.ru)
-# @date   01.06.2016
-# @brief  Firefox addon to convert russian syllabes to japanese kana
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+// ==UserScript==
+// @name        kananization
+// @namespace   kana
+// @version     1
+// @grant       none
+// ==/UserScript==
+(function (document) { 
 
-var romajiCapital = [
+    
+	var romajiCapital = [
     ["A", "エー"],
     ["B", "ビー"],
     ["C", "シー"],
@@ -503,11 +491,11 @@ var romajiKatakanaDouble = [
 
 function convert2hiraganaRU(text) 
 {
-  for (var i = 0; i < rosiajiHiraganaDouble.length; i++) 
+  for (var i = 0; i < rosiajiHiraganaDouble.length; i+=2) 
   {        
     text = text.replace(new RegExp(rosiajiHiraganaDouble[i][1], 'g'), rosiajiHiraganaDouble[i][0]);
   }
-  for (var i = 0; i < rosiajiHiraganaSingle.length; i++) 
+  for (var i = 0; i < rosiajiHiraganaSingle.length; i+=2) 
   {        
     text = text.replace(new RegExp(rosiajiHiraganaSingle[i][1], 'g'), rosiajiHiraganaSingle[i][0]);
   }    
@@ -548,10 +536,5 @@ function convertPage()
     treeWalker.currentNode.textContent = convert2hiraganaRU(treeWalker.currentNode.textContent);
   }
 }
-
-//##############################################
-
-chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) 
-{
-  convertPage();
-});
+    convertPage();
+})(document);
